@@ -20,15 +20,14 @@ package org.apache.fineract.integrationtests;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.fineract.client.models.PostSavingsAccountsAccountIdRequest;
-import org.apache.fineract.client.models.PostSavingsAccountsAccountIdResponse;
-import org.apache.fineract.client.models.PostSavingsAccountsRequest;
-import org.apache.fineract.client.models.PostSavingsAccountsResponse;
+
+import org.apache.fineract.client.models.*;
 import org.apache.fineract.integrationtests.client.IntegrationTest;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import retrofit2.Call;
 import retrofit2.Response;
 
 /**
@@ -94,4 +93,13 @@ public class SavingsAccountsTest extends IntegrationTest {
         assertThat(response.body()).isNotNull();
     }
 
+    @Test
+    @Order(4)
+    void getSavingsAccount() {
+        LOG.info("------------------------------ RETRIEVING SAVINGS ACCOUNT ---------------------------------------");
+        Response<GetSavingsAccountsResponse> response = okR(
+                fineract().savingsAccounts.retrieveAll33(null, null, null, null, null, null, "02041981"));
+        assertThat(response.isSuccessful()).isTrue();
+        assertThat(response.body()).isNotNull();
+    }
 }

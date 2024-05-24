@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.fineract.accounting.common.AccountingRuleType;
 import org.apache.fineract.accounting.glaccount.data.GLAccountData;
@@ -178,6 +179,7 @@ public class SavingsAccountReadPlatformServiceImpl implements SavingsAccountRead
         return this.jdbcTemplate.query(sqlBuilder.toString(), this.savingAccountMapper, queryParameters);
     }
 
+
     @Override
     public Page<SavingsAccountData> retrieveAll(final SearchParameters searchParameters) {
 
@@ -211,6 +213,11 @@ public class SavingsAccountReadPlatformServiceImpl implements SavingsAccountRead
             if (searchParameters.getOfficeId() != null) {
                 sqlBuilder.append("and c.office_id =?");
                 objectArray[arrayPos] = searchParameters.getOfficeId();
+                arrayPos = arrayPos + 1;
+            }
+            if (searchParameters.getDateOfBirth() != null) {
+                sqlBuilder.append("and c.date_of_birth =?");
+                objectArray[arrayPos] = searchParameters.getDateOfBirth();
                 arrayPos = arrayPos + 1;
             }
             if (searchParameters.isOrderByRequested()) {
